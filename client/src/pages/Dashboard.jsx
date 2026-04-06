@@ -9,7 +9,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:5000/entries')
+    fetch('https://ai-productivity-dashboard-production-4e1e.up.railway.app/entries')
       .then(res => res.json())
       .then(data => setEntries(data))
       .catch(err => console.error('Failed to fetch', err));
@@ -31,38 +31,38 @@ const Dashboard = () => {
       </div>
 
       <div className="stats-grid">
-        <Card 
-          title="Total Hours" 
-          value={`${totalHours.toFixed(1)}h`} 
-          subtitle="All time logged" 
-          icon={<Clock size={24} />} 
+        <Card
+          title="Total Hours"
+          value={`${totalHours.toFixed(1)}h`}
+          subtitle="All time logged"
+          icon={<Clock size={24} />}
         />
-        <Card 
-          title="Focus Hours" 
-          value={`${focusHours.toFixed(1)}h`} 
-          subtitle="Total deep work" 
-          icon={<Target size={24} />} 
+        <Card
+          title="Focus Hours"
+          value={`${focusHours.toFixed(1)}h`}
+          subtitle="Total deep work"
+          icon={<Target size={24} />}
         />
-        <Card 
-          title="Productivity Score" 
-          value={`${productivityScore}/100`} 
-          subtitle="Based on focus ratio" 
-          icon={<Focus size={24} />} 
+        <Card
+          title="Productivity Score"
+          value={`${productivityScore}/100`}
+          subtitle="Based on focus ratio"
+          icon={<Focus size={24} />}
         />
-        <Card 
-          title="Burnout Risk" 
-          value={burnoutRisk} 
-          subtitle={burnoutRisk === 'Low' ? 'Healthy work pattern' : 'Take a break soon'} 
+        <Card
+          title="Burnout Risk"
+          value={burnoutRisk}
+          subtitle={burnoutRisk === 'Low' ? 'Healthy work pattern' : 'Take a break soon'}
           icon={
-            <AlertTriangle 
-              size={24} 
+            <AlertTriangle
+              size={24}
               color={
-                burnoutRisk === 'High' ? 'var(--danger-color)' : 
-                burnoutRisk === 'Medium' ? '#f59e0b' : 
-                'var(--success-color)'
-              } 
+                burnoutRisk === 'High' ? 'var(--danger-color)' :
+                  burnoutRisk === 'Medium' ? '#f59e0b' :
+                    'var(--success-color)'
+              }
             />
-          } 
+          }
         />
       </div>
 
@@ -75,10 +75,10 @@ const Dashboard = () => {
                 const maxHours = Math.max(...entries.map(e => Number(e.totalHours) || 0), 10);
                 const heightPercent = Math.min(((Number(entry.totalHours) || 0) / maxHours) * 100, 100);
                 const dayLabel = new Date(entry.date).toLocaleDateString('en-US', { weekday: 'short' });
-                
+
                 return (
                   <div className="bar-wrapper" key={entry._id || index}>
-                    <div className="bar" style={{height: `${heightPercent}%`}}></div>
+                    <div className="bar" style={{ height: `${heightPercent}%` }}></div>
                     <span>{dayLabel}</span>
                   </div>
                 );
@@ -95,7 +95,7 @@ const Dashboard = () => {
             <h3>AI Insight</h3>
           </div>
           <p className="ai-message">
-            {entries.length > 0 
+            {entries.length > 0
               ? `With ${totalHours.toFixed(1)} total hours logged and a productivity score of ${productivityScore}, ${burnoutRisk === 'Low' ? 'you are maintaining a solid balance. Keep it up!' : 'consider scheduling intentional breaks to avoid burnout.'}`
               : 'Start logging your daily activity to receive personalized AI productivity insights based on your working patterns and focus levels.'}
           </p>

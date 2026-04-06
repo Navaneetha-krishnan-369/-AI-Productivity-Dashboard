@@ -16,18 +16,18 @@ const Login = ({ onLogin }) => {
     setLoading(true);
     setMessage('');
     setIsError(false);
-    
+
     const endpoint = isLoginMode ? '/login' : '/register';
-    
+
     try {
-      const response = await fetch(`http://localhost:5000${endpoint}`, {
+      const response = await fetch(`https://ai-productivity-dashboard-production-4e1e.up.railway.app${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok) {
         if (isLoginMode) {
           onLogin(); // Proceed to dashboard
@@ -62,7 +62,7 @@ const Login = ({ onLogin }) => {
             {message}
           </div>
         )}
-        
+
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
             <label htmlFor="username">Username</label>
@@ -75,7 +75,7 @@ const Login = ({ onLogin }) => {
               required
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
@@ -87,7 +87,7 @@ const Login = ({ onLogin }) => {
               required
             />
           </div>
-          
+
           <button type="submit" className="btn login-btn" disabled={loading}>
             {loading ? 'Processing...' : (isLoginMode ? 'Sign In' : 'Sign Up')}
           </button>
@@ -96,9 +96,9 @@ const Login = ({ onLogin }) => {
         <div className="toggle-auth-mode">
           <p>
             {isLoginMode ? "Don't have an account? " : "Already have an account? "}
-            <button 
-              type="button" 
-              className="text-btn toggle-btn" 
+            <button
+              type="button"
+              className="text-btn toggle-btn"
               onClick={() => {
                 setIsLoginMode(!isLoginMode);
                 setMessage('');

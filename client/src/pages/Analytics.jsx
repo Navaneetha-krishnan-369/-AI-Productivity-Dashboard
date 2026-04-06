@@ -7,7 +7,7 @@ const Analytics = () => {
   const [entries, setEntries] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/entries')
+    fetch('https://ai-productivity-dashboard-production-4e1e.up.railway.app/entries')
       .then(res => res.json())
       .then(data => setEntries(data))
       .catch(err => console.error('Failed to fetch', err));
@@ -42,7 +42,7 @@ const Analytics = () => {
               return (
                 <div className="dist-row" key={entry._id || idx}>
                   <span className="dist-label">{dateLabel}</span>
-                  <div className="dist-bar-bg"><div className="dist-bar-fill" style={{width: `${score}%`}}></div></div>
+                  <div className="dist-bar-bg"><div className="dist-bar-fill" style={{ width: `${score}%` }}></div></div>
                   <span className="dist-value">{score}%</span>
                 </div>
               );
@@ -54,13 +54,13 @@ const Analytics = () => {
           <h3 className="section-title">Overview Metrics</h3>
           <div className="progress-circles">
             <div className="circle-item">
-              <div className="circle" style={{background: `conic-gradient(var(--accent-color) ${avgProductivity}%, var(--bg-color) 0)`}}>
+              <div className="circle" style={{ background: `conic-gradient(var(--accent-color) ${avgProductivity}%, var(--bg-color) 0)` }}>
                 <span>{avgProductivity}%</span>
               </div>
               <p>Avg Focus</p>
             </div>
             <div className="circle-item">
-              <div className="circle" style={{background: `conic-gradient(var(--success-color) ${Math.min((totalHours/100)*100, 100)}%, var(--bg-color) 0)`}}>
+              <div className="circle" style={{ background: `conic-gradient(var(--success-color) ${Math.min((totalHours / 100) * 100, 100)}%, var(--bg-color) 0)` }}>
                 <span>{totalHours.toFixed(1)}h</span>
               </div>
               <p>Total Time</p>

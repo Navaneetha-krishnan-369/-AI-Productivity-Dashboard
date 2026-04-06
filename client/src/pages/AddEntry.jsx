@@ -11,19 +11,19 @@ const AddEntry = () => {
   });
 
   const handleChange = (e) => {
-    setFormData({ 
-      ...formData, 
-      [e.target.name]: e.target.value 
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     console.log('Sending data:', formData);
-    
+
     try {
-      const response = await fetch('http://localhost:5000/add-entry', {
+      const response = await fetch('https://ai-productivity-dashboard-production-4e1e.up.railway.app/add-entry', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -65,67 +65,67 @@ const AddEntry = () => {
         <form onSubmit={handleSubmit} className="entry-form">
           <div className="form-group">
             <label htmlFor="date">Date</label>
-            <input 
-              type="date" 
-              id="date" 
-              name="date" 
-              value={formData.date} 
-              onChange={handleChange} 
-              required 
+            <input
+              type="date"
+              id="date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+              required
             />
           </div>
 
           <div className="form-group">
             <label htmlFor="totalHours">Total Hours Worked</label>
-            <input 
-              type="number" 
-              id="totalHours" 
-              name="totalHours" 
+            <input
+              type="number"
+              id="totalHours"
+              name="totalHours"
               step="0.5"
               min="0"
               max="24"
-              value={formData.totalHours} 
-              onChange={handleChange} 
+              value={formData.totalHours}
+              onChange={handleChange}
               placeholder="e.g. 8"
-              required 
+              required
             />
           </div>
 
           <div className="form-group">
             <label htmlFor="focusHours">Focus Hours</label>
-            <input 
-              type="number" 
-              id="focusHours" 
-              name="focusHours" 
+            <input
+              type="number"
+              id="focusHours"
+              name="focusHours"
               step="0.5"
               min="0"
               max="24"
-              value={formData.focusHours} 
-              onChange={handleChange} 
+              value={formData.focusHours}
+              onChange={handleChange}
               placeholder="e.g. 6.5"
-              required 
+              required
             />
           </div>
 
           <div className="form-group">
             <label htmlFor="breakTime">Break Time (Minutes)</label>
-            <input 
-              type="number" 
-              id="breakTime" 
-              name="breakTime" 
+            <input
+              type="number"
+              id="breakTime"
+              name="breakTime"
               min="0"
-              value={formData.breakTime} 
-              onChange={handleChange} 
+              value={formData.breakTime}
+              onChange={handleChange}
               placeholder="e.g. 45"
             />
           </div>
 
           <div className="form-group">
             <label htmlFor="mood">Mental State / Mood</label>
-            <select 
-              id="mood" 
-              name="mood" 
-              value={formData.mood} 
+            <select
+              id="mood"
+              name="mood"
+              value={formData.mood}
               onChange={handleChange}
             >
               <option value="Energized">Energized</option>

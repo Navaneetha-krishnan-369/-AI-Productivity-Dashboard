@@ -6,7 +6,7 @@ const AIInsights = () => {
   const [entries, setEntries] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/entries')
+    fetch('https://ai-productivity-dashboard-production-4e1e.up.railway.app/entries')
       .then(res => res.json())
       .then(data => setEntries(data))
       .catch(err => console.error('Failed to fetch', err));
@@ -32,7 +32,7 @@ const AIInsights = () => {
       </div>
 
       {entries.length === 0 ? (
-        <p className="text-secondary" style={{padding: '2rem'}}>No data available for insights.</p>
+        <p className="text-secondary" style={{ padding: '2rem' }}>No data available for insights.</p>
       ) : (
         <div className="insights-container">
           <div className="insight-card highlight">
@@ -42,10 +42,10 @@ const AIInsights = () => {
             <div className="insight-content">
               <h3>Performance Assessment: {performanceLevel}</h3>
               <p>
-                Your average productivity score is {avgProductivity}%. 
-                {avgProductivity > 75 ? " Fantastic job keeping a high focus ratio! You are consistently achieving deep work states." : 
-                 avgProductivity >= 50 ? " You have a balanced work routine. There is room to optimize your focus hours further." : 
-                 " Your focus ratio is below optimal. Consider reducing distractions or breaking tasks into smaller chunks."}
+                Your average productivity score is {avgProductivity}%.
+                {avgProductivity > 75 ? " Fantastic job keeping a high focus ratio! You are consistently achieving deep work states." :
+                  avgProductivity >= 50 ? " You have a balanced work routine. There is room to optimize your focus hours further." :
+                    " Your focus ratio is below optimal. Consider reducing distractions or breaking tasks into smaller chunks."}
               </p>
             </div>
           </div>
@@ -57,9 +57,9 @@ const AIInsights = () => {
             <div className="insight-content">
               <h3>Burnout Risk: {burnoutRisk}</h3>
               <p>
-                You have logged {totalHours.toFixed(1)} total hours. 
-                {isBurnoutHigh ? " Warning: Logging excessive hours significantly increases your risk of burnout. Please consider taking regular breaks and scheduling downtime." : 
-                 " You are maintaining a sustainable workload. Keep balancing work and rest to prevent long-term fatigue."}
+                You have logged {totalHours.toFixed(1)} total hours.
+                {isBurnoutHigh ? " Warning: Logging excessive hours significantly increases your risk of burnout. Please consider taking regular breaks and scheduling downtime." :
+                  " You are maintaining a sustainable workload. Keep balancing work and rest to prevent long-term fatigue."}
               </p>
             </div>
           </div>
@@ -71,7 +71,7 @@ const AIInsights = () => {
             <div className="insight-content">
               <h3>Data Summary</h3>
               <p>
-                Based on {totalEntries} recorded entries, you have accumulated {focusHours.toFixed(1)} hours of deep focus. 
+                Based on {totalEntries} recorded entries, you have accumulated {focusHours.toFixed(1)} hours of deep focus.
                 Maintaining this tracking habit helps AI give you more precise recommendations over time.
               </p>
             </div>
