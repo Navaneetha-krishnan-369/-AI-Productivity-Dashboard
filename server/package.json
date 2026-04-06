@@ -1,0 +1,19 @@
+{
+  "name": "ai-productivity-dashboard-server",
+  "version": "1.0.0",
+  "description": "Backend API for Productivity Dashboard",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "mongoose": "^9.3.2"
+  }
+}

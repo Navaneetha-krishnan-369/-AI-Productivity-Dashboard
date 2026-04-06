@@ -1,0 +1,108 @@
+.analytics-page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chart-card {
+  background-color: var(--card-bg);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+}
+
+.distribution-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.dist-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dist-label {
+  width: 100px;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.dist-bar-bg {
+  flex: 1;
+  height: 8px;
+  background-color: var(--bg-color);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.dist-bar-fill {
+  height: 100%;
+  background-color: var(--accent-color);
+  border-radius: 4px;
+}
+
+.dist-value {
+  width: 40px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-align: right;
+}
+
+.progress-circles {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1.5rem;
+}
+
+.circle-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.circle::before {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  background-color: var(--card-bg);
+  border-radius: 50%;
+}
+
+.circle span {
+  position: relative;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.circle-item p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
