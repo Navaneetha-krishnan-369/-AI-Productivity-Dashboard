@@ -10,7 +10,13 @@ const PORT = 5000;
 
 // Middleware
 app.use(cors({
-  origin: 'https://ai-productivity-dashboard-one.vercel.app'
+  origin: function (origin, callback) {
+    if (!origin || origin.startsWith('http://localhost') || origin.startsWith('http://127.0.0.1') || origin === 'https://ai-productivity-dashboard-one.vercel.app') {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
 }));
 app.use(express.json());
 
