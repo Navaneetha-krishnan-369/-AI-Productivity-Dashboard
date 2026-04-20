@@ -9,7 +9,9 @@ const app = express();
 const PORT = 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'https://ai-productivity-dashboard-one.vercel.app'
+}));
 app.use(express.json());
 
 // MongoDB Connection
@@ -111,13 +113,13 @@ app.post('/chat', async (req, res) => {
 
   const { username, message } = req.body;
   if (!username || !message) {
-      return res.status(400).json({ message: 'Username and message are required' });
+    return res.status(400).json({ message: 'Username and message are required' });
   }
 
   try {
-      const entries = await Entry.find({ username }).sort({ date: -1 }).limit(10);
-      
-      const contextPrompt = `You are an AI productivity assistant for an app called AI-Productivity-Dashboard.
+    const entries = await Entry.find({ username }).sort({ date: -1 }).limit(10);
+
+    const contextPrompt = `You are an AI productivity assistant for an app called AI-Productivity-Dashboard.
 User: ${username}
 Recent productivity entries (last 10 days):
 ${entries.map(e => `- Date: ${e.date}, Total Hours: ${e.totalHours}, Focus Hours: ${e.focusHours}, Break: ${e.breakTime} mins, Mood: ${e.mood}`).join('\n')}
@@ -125,15 +127,15 @@ ${entries.map(e => `- Date: ${e.date}, Total Hours: ${e.totalHours}, Focus Hours
 Based on this data and the user's prompt, provide a concise, helpful, and encouraging response about their productivity, burnout risk, and focus habits. Be brief and engaging. Answer the following user message:
 User Message: "${message}"`;
 
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: contextPrompt,
-      });
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: contextPrompt,
+    });
 
-      res.status(200).json({ reply: response.text });
+    res.status(200).json({ reply: response.text });
   } catch (error) {
-      console.error('Chat error:', error);
-      res.status(500).json({ message: 'Error processing chat', error: error.message });
+    console.error('Chat error:', error);
+    res.status(500).json({ message: 'Error processing chat', error: error.message });
   }
 });
 
