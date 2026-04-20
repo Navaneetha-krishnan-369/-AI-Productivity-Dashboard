@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, PlusCircle, BarChart2, BrainCircuit } from 'lucide-react';
+import { LayoutDashboard, PlusCircle, BarChart2, BrainCircuit, LogOut } from 'lucide-react';
 import './Sidebar.css';
 
-const Sidebar = () => {
+const Sidebar = ({ onLogout }) => {
   const navItems = [
     { path: '/', name: 'Dashboard', icon: <LayoutDashboard size={20} /> },
     { path: '/add-entry', name: 'Add Entry', icon: <PlusCircle size={20} /> },
@@ -29,6 +29,12 @@ const Sidebar = () => {
           </NavLink>
         ))}
       </nav>
+      <div className="sidebar-footer">
+        <button className="logout-btn" onClick={onLogout}>
+          <LogOut size={20} />
+          <span>Logout</span>
+        </button>
+      </div>
     </aside>
   );
 };

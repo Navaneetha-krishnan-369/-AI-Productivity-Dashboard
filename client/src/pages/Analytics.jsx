@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import API_URL from '../config';
 import Card from '../components/Card';
-import { Target, Activity, Zap, TrendingUp } from 'lucide-react';
+import { Target, Activity, Zap, TrendingUp, Coffee } from 'lucide-react';
 import './Analytics.css';
 
-const Analytics = () => {
+const Analytics = ({ user }) => {
   const [entries, setEntries] = useState([]);
 
   useEffect(() => {
-    fetch('https://ai-productivity-dashboard-production-4e1e.up.railway.app/entries')
+    if (!user) return;
+    fetch(`${API_URL}/entries?username=${user}`)
       .then(res => res.json())
       .then(data => setEntries(data))
       .catch(err => console.error('Failed to fetch', err));
@@ -17,6 +19,9 @@ const Analytics = () => {
   const totalHours = entries.reduce((acc, curr) => acc + (Number(curr.totalHours) || 0), 0);
   const focusHours = entries.reduce((acc, curr) => acc + (Number(curr.focusHours) || 0), 0);
   const avgProductivity = totalHours > 0 ? Math.round((focusHours / totalHours) * 100) : 0;
+
+  const totalBreakMinutes = entries.reduce((acc, curr) => acc + (Number(curr.breakTime) || 0), 0);
+  const avgBreakMinutes = totalEntries > 0 ? Math.round(totalBreakMinutes / totalEntries) : 0;
 
   return (
     <div className="analytics-page">
@@ -64,6 +69,12 @@ const Analytics = () => {
                 <span>{totalHours.toFixed(1)}h</span>
               </div>
               <p>Total Time</p>
+            </div>
+            <div className="circle-item">
+              <div className="circle" style={{ background: `conic-gradient(#8b5cf6 ${Math.min((avgBreakMinutes / 60) * 100, 100)}%, var(--bg-color) 0)` }}>
+                <span>{avgBreakMinutes}m</span>
+              </div>
+              <p>Avg Rest</p>
             </div>
           </div>
         </div>

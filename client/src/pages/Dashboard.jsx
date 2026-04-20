@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import API_URL from '../config';
 import Card from '../components/Card';
-import { Clock, Focus, Target, AlertTriangle, Sparkles } from 'lucide-react';
+import { Clock, Focus, Target, AlertTriangle, Sparkles, Coffee } from 'lucide-react';
 import './Dashboard.css';
 
-const Dashboard = () => {
+const Dashboard = ({ user }) => {
   const [entries, setEntries] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('https://ai-productivity-dashboard-production-4e1e.up.railway.app/entries')
+    if (!user) return;
+    fetch(`${API_URL}/entries?username=${user}`)
       .then(res => res.json())
       .then(data => setEntries(data))
       .catch(err => console.error('Failed to fetch', err));
@@ -17,11 +19,17 @@ const Dashboard = () => {
 
   const totalHours = entries.reduce((sum, e) => sum + (Number(e.totalHours) || 0), 0);
   const focusHours = entries.reduce((sum, e) => sum + (Number(e.focusHours) || 0), 0);
+  const breakMinutes = entries.reduce((sum, e) => sum + (Number(e.breakTime) || 0), 0);
+  const breakHours = breakMinutes / 60;
+  
   const productivityScore = totalHours > 0 ? Math.round((focusHours / totalHours) * 100) : 0;
 
   let burnoutRisk = "Low";
-  if (totalHours > 50 || productivityScore < 40) burnoutRisk = "High";
-  else if (totalHours > 40 || productivityScore < 60) burnoutRisk = "Medium";
+  const isWorkingHard = totalHours > 40;
+  const isNotResting = breakHours < (totalHours * 0.1); // less than 10% rest
+  
+  if (totalHours > 50 && isNotResting) burnoutRisk = "High";
+  else if (totalHours > 50 || (isWorkingHard && isNotResting) || productivityScore < 40) burnoutRisk = "Medium";
 
   return (
     <div className="dashboard-page">
@@ -48,6 +56,12 @@ const Dashboard = () => {
           value={`${productivityScore}/100`}
           subtitle="Based on focus ratio"
           icon={<Focus size={24} />}
+        />
+        <Card
+          title="Total Break Time"
+          value={`${breakHours.toFixed(1)}h`}
+          subtitle="Cumulative rest taken"
+          icon={<Coffee size={24} color="#8b5cf6" />}
         />
         <Card
           title="Burnout Risk"

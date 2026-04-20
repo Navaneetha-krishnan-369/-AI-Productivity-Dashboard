@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import API_URL from '../config';
 import './Login.css';
 
 const Login = ({ onLogin }) => {
@@ -20,7 +21,7 @@ const Login = ({ onLogin }) => {
     const endpoint = isLoginMode ? '/login' : '/register';
 
     try {
-      const response = await fetch(`https://ai-productivity-dashboard-production-4e1e.up.railway.app${endpoint}`, {
+      const response = await fetch(`${API_URL}${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
@@ -30,7 +31,7 @@ const Login = ({ onLogin }) => {
 
       if (response.ok) {
         if (isLoginMode) {
-          onLogin(); // Proceed to dashboard
+          onLogin(data.username); // Proceed to dashboard
         } else {
           setMessage('Registration successful! Please sign in.');
           setIsError(false);

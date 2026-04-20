@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import API_URL from '../config';
 import './AddEntry.css';
 
-const AddEntry = () => {
+const AddEntry = ({ user }) => {
   const [formData, setFormData] = useState({
     date: new Date().toISOString().split('T')[0],
     totalHours: '',
@@ -23,12 +24,14 @@ const AddEntry = () => {
     console.log('Sending data:', formData);
 
     try {
-      const response = await fetch('https://ai-productivity-dashboard-production-4e1e.up.railway.app/add-entry', {
+      if (!user) return alert('No user logged in!');
+      const response = await fetch(`${API_URL}/add-entry`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          username: user,
           date: formData.date,
           totalHours: Number(formData.totalHours),
           focusHours: Number(formData.focusHours),
@@ -63,7 +66,7 @@ const AddEntry = () => {
 
       <div className="form-container">
         <form onSubmit={handleSubmit} className="entry-form">
-          <div className="form-group">
+          <div className="form-group full-width">
             <label htmlFor="date">Date</label>
             <input
               type="date"
@@ -136,7 +139,7 @@ const AddEntry = () => {
             </select>
           </div>
 
-          <button type="submit" className="btn submit-btn">Save Entry</button>
+          <button type="submit" className="btn submit-btn full-width">Save Entry</button>
         </form>
       </div>
     </div>
