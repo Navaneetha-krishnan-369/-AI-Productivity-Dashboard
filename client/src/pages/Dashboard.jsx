@@ -28,8 +28,10 @@ const Dashboard = ({ user }) => {
   const isWorkingHard = totalHours > 40;
   const isNotResting = breakHours < (totalHours * 0.1); // less than 10% rest
   
-  if (totalHours > 50 && isNotResting) burnoutRisk = "High";
-  else if (totalHours > 50 || (isWorkingHard && isNotResting) || productivityScore < 40) burnoutRisk = "Medium";
+  if ((totalHours > 50 && isNotResting) || (totalHours > 8 && isNotResting)) 
+    burnoutRisk = "High";
+  else if (totalHours > 50 || (isWorkingHard && isNotResting) || (totalHours > 8) || productivityScore < 40) 
+    burnoutRisk = "Medium";
 
   return (
     <div className="dashboard-page">
